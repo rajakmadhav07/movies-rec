@@ -6,8 +6,6 @@ import streamlit as st
 import streamlit.components.v1 as components
 from pathlib import Path
 
-TMDB_API_KEY = os.getenv("TMDB_API_KEY", "")
-
 # =========================================================
 # PAGE CONFIGURATION
 # =========================================================
@@ -56,10 +54,15 @@ except Exception as error:
 # TMDB API CONFIGURATION
 # =========================================================
 
-try:
-    API_KEY = st.secrets.get("TMDB_API_KEY", "").strip()
-except Exception:
-    API_KEY = ""
+# TMDB API CONFIGURATION
+
+API_KEY = os.getenv("TMDB_API_KEY", "").strip()
+
+if not API_KEY:
+    try:
+        API_KEY = st.secrets.get("TMDB_API_KEY", "").strip()
+    except Exception:
+        API_KEY = ""
 
 # =========================================================
 # CUSTOM CSS
